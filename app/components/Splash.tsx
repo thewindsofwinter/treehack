@@ -1,5 +1,3 @@
-import bg from '../assets/splash.png'
-
 const Splash = () =>{
     return (
         <>

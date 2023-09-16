@@ -1,6 +1,9 @@
 "use client"
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
+
+// https://airquality.googleapis.com/v1/mapTypes/TYPE/heatmapTiles/Z/X/Y?key=YOUR_API_KEY
+
 const Map = () =>{
     return (
       <MapContainer id="Start" center={[51.505, -0.09]} zoom={13} style={{  height: '80vh',
