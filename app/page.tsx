@@ -8,7 +8,6 @@ export default function Home() {
   return (
     <>
       <Splash />
-      <h1 id="Start">This comes after!!!</h1>
       <Map />
     </>
   )
