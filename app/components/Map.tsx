@@ -1,5 +1,5 @@
-import bg from '../assets/splash.png'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+"use client"
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
 const Map = () =>{
     return (
@@ -10,7 +10,7 @@ const Map = () =>{
       />
       <Marker position={[51.505, -0.09]}>
         <Popup>
-          A sample marker with a popup.
+          A sample marker!!!!!
         </Popup>
       </Marker>
     </MapContainer>
