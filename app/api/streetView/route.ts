@@ -11,17 +11,13 @@ interface Location {
     generateddata?: string,
 }
 
-interface Coords {
-    lat: number,
-    lng: number,
-}
-
 export async function POST(req: Request) {
   const { latitude, longitude } = await req.json();
 
-    const location: Coords = await fetch(`https://maps.googleapis.com/maps/api/streetview/metadata?location=${latitude},${longitude}&radius=100&key=AIzaSyB5gMGVEdjmsBG9ssXrwHbZsoXWO7mc2A4`)
+    const location = await fetch(`https://maps.googleapis.com/maps/api/streetview/metadata?location=${latitude},${longitude}&radius=500&key=AIzaSyB5gMGVEdjmsBG9ssXrwHbZsoXWO7mc2A4`)
         .then((response) => response.json())
         .then((json) => {
+            // console.log(json);
             return json.location;
         });
     

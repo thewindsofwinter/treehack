@@ -198,10 +198,10 @@ export const macroCanopy = async (centerX: number, centerY: number, limitCount: 
         }
     }
 
-    console.log("returning")
-    console.log(canopyGridAll.length)
-    console.log(canopySufficient.length)
-    console.log(canopyInsufficientAll.length)
+    // console.log("returning")
+    // console.log(canopyGridAll.length)
+    // console.log(canopySufficient.length)
+    // console.log(canopyInsufficientAll.length)
 
     return { canopyGridAll, canopySufficient, canopyInsufficientAll };
 }

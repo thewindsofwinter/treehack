@@ -6,6 +6,7 @@ import Control from 'react-leaflet-custom-control'
 import { useState } from 'react'
 import axios from 'axios'
 import { useEffect } from 'react'
+import Image from 'next/image'
 
 interface Location {
   latitude: number,
@@ -14,7 +15,6 @@ interface Location {
   street_score: number, 
   tree_score: number,
   dataurl: string,
-  generateddata?: string,
 }
 
 const Map = () =>{
@@ -25,6 +25,7 @@ const Map = () =>{
   const { BaseLayer, Overlay } = LayersControl;
 
   const [toggled, setToggled] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [selected, setSelected] = useState([-1,-1])
 
   const [locations, setLocations] = useState([{"name": "San Bernardino",
@@ -32,11 +33,12 @@ const Map = () =>{
                       "lng": 34.22702681845975}]);
 
   const [streetViewImage, setStreetViewImage] = useState<Location | null>(null);
+  const [generatedData, setGeneratedData] = useState<string>("");
 
   const updateSelected = (index : number, location : { name: string; lat: number; lng: number; }) => {
     setSelected([location.lat, location.lng]);
-    console.log(index);
-    console.log(selected)
+    // console.log(index);
+    // console.log(selected)
     const loc = document.getElementById(`location${index}`)
     if(loc) loc.style.border =  "2px solid black;"
   }
@@ -58,32 +60,48 @@ const Map = () =>{
     setLocations(locations);
   }
 
-  async function queryAPI(lat: number, lng: number) {
+  async function editImage(i: number, datauri: string) {
+      const url = await axios.post('/api/getImage', {
+          id: i,
+          datauri
+      }).then((response) => response.data.generateddata);
+      console.log(url.length);
+
+      setGeneratedData(url as string);
+  }
+
+  async function queryAPI(selected: number[]) {
+    setLoading(true);
     // Make an Axios POST request to /api/streetView with the latitude and longitude lists
     setStreetViewImage(await axios.post('/api/streetView', {
-      latitude: lng,
-      longitude: lat,
-    }).then((response) => { return response.data.location; }));
+      latitude: selected[1],
+      longitude: selected[0],
+    }).then((response) => { 
+      setLoading(false);
+      return response.data.location; }));
   }
 
   useEffect(() => {
-    if (streetViewImage && !streetViewImage.generateddata) {
-      setStreetViewImage((streetViewImage) => {
-        
-      })
+    if (streetViewImage?.dataurl) {
+      editImage(0, streetViewImage.dataurl)
     }
   }, [streetViewImage])
 
+  useEffect(() => {
+    // console.log(streetViewImage?.heading);
+    console.log(generatedData.length);
+  }, [streetViewImage, generatedData])
+    
   const MapEvents = () => {
     useMapEvents({
       click(e) {
         // setState your coords here
         // coords exist in "e.latlng.lat" and "e.latlng.lng"
-        console.log(e.latlng.lat);
-        console.log(e.latlng.lng);
-
+        // console.log(e.latlng.lat);
+        // console.log(e.latlng.lng);
+  
         setLatLng(e.latlng.lat, e.latlng.lng);
-
+  
         const panel = document.getElementById("panel")
         if(panel && toggled) panel.style.display = "none";
         else if(panel && !toggled) panel.style.display = "block";
@@ -94,10 +112,8 @@ const Map = () =>{
         // console.log(lat, lng)
       }
     });
-    return false;
+    return <></>;
   }
-
-  
   
 
     return (
@@ -141,22 +157,22 @@ const Map = () =>{
               />
 
               {/* Popup */}
-              <Label text={""} latlng={[Number(selected[0]),Number(selected[1])]}/>
+              <Label text={""} latlng={[selected[1],selected[0]]}/>
               {/* Enables Map Events on the Container */}
               <MapEvents />
             </LayersControl>
 
           <Control prepend position='topright'>
-            <div id="panel">
-              {locations.map((location, index)=>(
+            <div id="panel" className="overflow-scroll">
+              {locations.slice(0, 8).map((location, index)=>(
                 <div key={index} className="location" id={`location${index}`} onClick={()=> updateSelected(index, location)}>
                   <h1 className='POI'>{location.name}</h1>
-                  <p id="latitude">Latitude: <span>{`${location.lat.toFixed(2)} °W`}</span></p>
-                  <p id="longitude">Longitude: <span>{`${location.lng.toFixed(2)} °N`}</span></p>
+                  <p id="latitude">Latitude: <span>{`${location.lat.toFixed(4)} °W`}</span></p>
+                  <p id="longitude">Longitude: <span>{`${location.lng.toFixed(4)} °N`}</span></p>
                 </div>
               ))}
 
-              <button id="analyze-button" onClick={queryAPI}>
+              <button id="analyze-button" className="mb-16" onClick={() => { queryAPI(selected) }}>
                 Select
               </button>
             </div>
@@ -166,6 +182,31 @@ const Map = () =>{
           </MapContainer>
           {/* <Streetview></Streetview> */}
         </div>
+        {loading ? 
+          <div className="pulse rounded-lg center w-full h-96 my-4"></div> : null
+        }
+        {streetViewImage ? 
+          <div className="my-4 bg-purple-300 p-4 rounded-md">
+            <p className="mb-2">Latitude: {streetViewImage.latitude}</p>
+            <p className="mb-2">Longitude: {streetViewImage.longitude}</p>
+            <p className="mb-2">Heading: {streetViewImage.heading}</p>
+            <p className="mb-2">Street score: {streetViewImage.street_score}</p>
+            <p className="mb-2">Tree score: {streetViewImage.tree_score}</p>
+            <div className="flex">
+              <div className="mr-8">
+                <p>Original Image</p>
+                <Image src={streetViewImage.dataurl} width={384} height={384} alt="original unshaded street"/>
+              </div>
+              <div>
+                <p>Generated Image</p>
+                
+                { generatedData ? 
+                    <Image src={generatedData} width={384} height={384} alt="generated visualization of canopy improvement" />
+                : <div className="pulse rounded-lg center w-96 h-96"></div> }
+              </div>
+            </div>
+          </div>
+          : null }
       </section>
     )
 }
