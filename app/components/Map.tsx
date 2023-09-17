@@ -32,9 +32,9 @@ const Map = () =>{
 
     return (
       
-      <div className='map-shell'>
+      <div id='#Start'>
         <h1 className="section-title">Choose Your City</h1>
-        <MapContainer id="Start" center={[34.1083,-117.2898]} zoom={5}>
+        <MapContainer className='map' center={[34.1083,-117.2898]} zoom={5}>
           <LayersControl position="bottomleft">
             {/* Main Map */}
             <TileLayer
