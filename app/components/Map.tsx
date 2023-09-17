@@ -14,6 +14,15 @@ const Map = () =>{
   const { BaseLayer, Overlay } = LayersControl;
 
   const [toggled, setToggled] = useState(false)
+  const [selected, setSelected] = useState([-1,-1])
+
+  const updateSelected = (index : number, location : { name: string; lat: string; lng: string; }) => {
+    setSelected([Number(location.lat), Number(location.lng)]);
+    console.log(index);
+    console.log(selected)
+    const loc = document.getElementById(`location${index}`)
+    if(loc) loc.style.border =  "2px solid black;"
+  }
 
   const MapEvents = () => {
     useMapEvents({
@@ -22,6 +31,7 @@ const Map = () =>{
         // coords exist in "e.latlng.lat" and "e.latlng.lng"
         console.log(e.latlng.lat);
         console.log(e.latlng.lng);
+
         const panel = document.getElementById("panel")
         if(panel && toggled) panel.style.display = "none";
         else if(panel && !toggled) panel.style.display = "block";
@@ -35,11 +45,22 @@ const Map = () =>{
     return false;
   }
 
-  const locations = [{"name": "San Bernardino"}]
+  const locations = [{"name": "San Bernardino",
+                      "lat": "-117.15053157252503",
+                      "lng": "34.22702681845975"},
+                      {"name": "San Bernardino",
+                      "lat": "-117.5734168686697",
+                      "lng": "33.942718892219645"},
+                      {"name": "San Bernardino",
+                      "lat": "-117.2898",
+                      "lng": "34.1083"},
+                      {"name": "San Bernardino",
+                      "lat": "-117.49946341029954",
+                      "lng": "34.54379489662335"}]
   
 
     return (
-      <section className='section-container'>
+      <section id="View" className='section-container'>
         <h1 className='section-title'>Choose Your City</h1>
         <div className='map-shell'>
           <MapContainer id='Start' center={[34.1083,-117.2898]} zoom={5}>
@@ -79,23 +100,23 @@ const Map = () =>{
               />
 
               {/* Popup */}
-              <Label text={""} latlng={[34.1083,-117.2898]}/>
+              <Label text={""} latlng={[Number(selected[0]),Number(selected[1])]}/>
               {/* Enables Map Events on the Container */}
               <MapEvents />
             </LayersControl>
 
           <Control prepend position='topright'>
             <div id="panel">
-              {/* {locations.map((location, index)=>(
-                <p key={index}>{location}</p>
-              ))} */}
-              <div className="location">
-                <h1 className='POI'>San Bernardino</h1>
-                <p>Latitude: 12.231 °W</p>
-                <p>Longitude: 12.231 °N</p>
-              </div>
+              {locations.map((location, index)=>(
+                <div className="location" id={`location${index}`} onClick={()=>updateSelected(index, location)}>
+                  <h1 className='POI'>{location.name}</h1>
+                  <p id="latitude">Latitude: <span>{location.lat} °W</span></p>
+                  <p id="longitude">Longitude: <span>{location.lng} °N</span></p>
+                </div>
+              ))}
+
               <button id="analyze-button">
-                Analyze
+                Select
               </button>
             </div>
 

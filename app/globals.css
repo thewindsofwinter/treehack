@@ -174,20 +174,47 @@ video {
 
 .POI{
   font-weight: bold;
-  text-align: left;
-  font-size: large;
+  /* text-align: left; */
+  font-size: 30px;
 }
 
 .location{
   width: 95%;
   height: 15vh;
-  margin: 0px 2.5%;
+  margin: 0px 2.5% 10px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 5px;
   padding: 10px;
+  transition: scale 200ms;
+}
+
+.location:hover{
+  scale:1.02;
+}
+
+.location > p {
+  font-size: 18px;
+}
+
+.location span{
+  font-weight: 600;
 }
 #analyze-button{
-  
+  width: 95%;
+  background-color: #013E20;
+  font-family: 'Montserrat';
+  color: whitesmoke;
+  padding: 10px;
+  font-weight: bold;
+  font-size:medium;
+  border: 2px solid rgba(0,0,0,0);
+  transition: border-radius 200ms;
+
+}
+
+#analyze-button:hover{
+  border-radius: 10px;
+  border: 2px solid black;
 }
 
 
