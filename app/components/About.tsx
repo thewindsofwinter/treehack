@@ -1,6 +1,6 @@
 const About = () =>{
     return (
-        <section id="about">
+        <section id="About">
             <h1 className="section-title">Our Mission</h1>
                 <div className="card">
                     <img src="./logo.jpg" alt="logo of a tree" className="card-img"/>
@@ -27,11 +27,11 @@ const About = () =>{
                             essentially unchanged.
                         </p>  
                     </div>
-                    <img src="./logo.jpg" alt="logo of a tree" className="card-img"/>
+                    <img src="./urban-canopy.jpeg" alt="Urban Heat Island diagram" className="card-img"/>
                 </div>
 
                 <div className="card">
-                <img src="./logo.jpg" alt="logo of a tree" className="card-img"/>
+                <img src="./thermal-heat-island.png" alt="Urban Heat Island diagram" className="card-img"/>
                     <div className="card-body">
                         <h1 className="card-title">What is the Urban Heat Island Effect?</h1>
                         <p className="card-text"> 
@@ -55,11 +55,11 @@ const About = () =>{
                             essentially unchanged.
                         </p>  
                     </div>
-                    <img src="./logo.jpg" alt="logo of a tree" className="card-img"/>
+                    <img src="./urban-trees.jpeg" alt="Tree in front of building" className="card-img"/>
                 </div>
 
                 <div className="card">
-                    <img src="./logo.jpg" alt="logo of a tree" className="card-img"/>
+                    <img src="./sample-map.png" alt="heat map image" className="card-img"/>
                     <div className="card-body">
                         <h1 className="card-title">What Do the Stats Indicate?</h1>
                         <p className="card-text"> 

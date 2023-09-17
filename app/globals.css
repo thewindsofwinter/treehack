@@ -74,18 +74,27 @@ video {
   justify-content: center;
 }
 
-.hero-button{
+.hero-button {
   border-radius: 40px;
-  background: white;
   box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.50);
-  padding: 10px 20px;
+  padding: 10px 30px;
+  height: 70px;
   font-family: 'Montserrat';
-  font-weight: 500;
   font-size: 24px;
   border: none;
   color: black;
   opacity: 0;
   animation: fadein 1500ms cubic-bezier(0.215, 0.610, 0.355, 1) 1500ms forwards;
+}
+
+#to-start {
+  font-weight: 700;
+  background: #E5E392;
+}
+
+#to-about {
+  font-weight: 500;
+  background: #BBB5B5;
 }
 
 @keyframes fadein {
@@ -100,34 +109,34 @@ video {
 
 .section-title {
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.50);
-  font-size: 68px;
+  font-size: 60px;
   font-weight: 800;
-  margin: 40px auto 20px;
+  margin-top: 40px;
   color: #FFF;
   text-align: center;
 }
 
 /* MAP */
 
-#Start{
+.map{
   position: relative;
-  margin: 8vh auto;
+  margin: 5vh auto;
   width: 80%;
   height: 80vh;
   border-radius: 20px;
-  /* background-color: aqua; */
+  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.25);
 }
 
 /* ABOUT */
 
-#about {
+#About {
   color: #FFF;
   text-align: center;
   margin: 10vh auto;
   width: 80%;
 }
 
-#about .section-title {
+#About .section-title {
   margin-bottom: 50px;
 }
 
@@ -143,6 +152,9 @@ video {
   width: 300px;
   border-radius: 20px;
   flex: 1;
+  object-fit: cover;
+  background: white;
+  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.25);
 }
 
 .card-body {
@@ -152,6 +164,7 @@ video {
   background:#131B10;
   border-radius: 30px;
   height: auto;
+  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.25);
 }
 
 .card-title {
