@@ -1,5 +1,5 @@
 offset = -5.0
-increment = 1.5
+increment = 1.25
 offset = offset - increment
 i = 0
 str = f"\"{offset + increment}~rgba(52,140,237,1.0)~\" + \
