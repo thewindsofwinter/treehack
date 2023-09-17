@@ -8,7 +8,7 @@ interface Location {
     street_score: number, 
     tree_score: number,
     dataurl: string,
-    generateddata: string | null,
+    generateddata?: string,
 }
 
 interface Coords {
@@ -17,24 +17,14 @@ interface Coords {
 }
 
 export async function POST(req: Request) {
-  const { latitudes, longitudes } = await req.json();
-  
-  const locations = Array<Location>();
+  const { latitude, longitude } = await req.json();
 
-  for(const index in latitudes) {
-    const latitude = latitudes[index];
-    const longitude = longitudes[index];
-    
-    let startTime = performance.now(); // Start timing for this request
     const location: Coords = await fetch(`https://maps.googleapis.com/maps/api/streetview/metadata?location=${latitude},${longitude}&radius=100&key=AIzaSyB5gMGVEdjmsBG9ssXrwHbZsoXWO7mc2A4`)
         .then((response) => response.json())
         .then((json) => {
             return json.location;
         });
     
-    const locationTime = performance.now() - startTime;
-    startTime = performance.now()
-
     const scoring = await axios.post("http://127.0.0.1:5000/api/location", {
         latitude: location.lat,
         longitude: location.lng,
@@ -43,15 +33,7 @@ export async function POST(req: Request) {
     })
     // console.log(scoring)
 
-    const alignScoreTime = performance.now() - startTime;
-
-    locations.push({ ...scoring, generateddata: null });
-
-    console.log(`Request ${index} of ${latitudes.length}. Location: ${locationTime.toFixed(2)}ms, Align and Score: ${alignScoreTime.toFixed(2)}ms`);
-  }
-
   // console.log(locations);
 
-  locations.sort((a, b) => { return b['street_score'] + b['tree_score'] - a['street_score'] - a['tree_score']; })
-  return NextResponse.json({ locations });
+  return NextResponse.json({ location: scoring });
 }
