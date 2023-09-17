@@ -8,7 +8,7 @@ interface Location {
     street_score: number, 
     tree_score: number,
     dataurl: string,
-    generateddata: string,
+    generateddata: string | null,
 }
 
 interface Coords {
@@ -44,17 +44,10 @@ export async function POST(req: Request) {
     // console.log(scoring)
 
     const alignScoreTime = performance.now() - startTime;
-    startTime = performance.now()
 
-    await axios.post("http://127.0.0.1:5000/api/edit-image", {
-        datauri: scoring.dataurl
-    }).then((response) => {
-        // console.log(response.data)
-        locations.push({ ...scoring, ...response.data });
-    })
-    const editImageTime = performance.now() - startTime;
+    locations.push({ ...scoring, generateddata: null });
 
-    console.log(`Request ${index} of ${latitudes.length}. Location: ${locationTime.toFixed(2)}ms, Align and Score: ${alignScoreTime.toFixed(2)}ms, Edit Image: ${editImageTime.toFixed(2)}ms`);
+    console.log(`Request ${index} of ${latitudes.length}. Location: ${locationTime.toFixed(2)}ms, Align and Score: ${alignScoreTime.toFixed(2)}ms`);
   }
 
   // console.log(locations);

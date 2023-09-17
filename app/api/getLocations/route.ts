@@ -5,7 +5,7 @@ import { macroCanopy } from '../../apis/canopy'
 export async function POST(req: Request) {
     const { latitude, longitude } = await req.json();
 
-    const { canopyGridAll, canopySufficient, canopyInsufficientAll } = await macroCanopy(longitude, latitude);
+    const { canopyGridAll, canopySufficient, canopyInsufficientAll } = await macroCanopy(longitude, latitude, 5);
 
-    return canopyInsufficientAll;
+    return NextResponse.json({ locations: canopyInsufficientAll });
 }

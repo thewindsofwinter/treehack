@@ -143,7 +143,7 @@ const returnLowCanopySmallGridsAsync = async (x: number, y: number, url: string)
     });
   };
 
-export const macroCanopy = async (centerX: number, centerY: number) => {
+export const macroCanopy = async (centerX: number, centerY: number, limitCount: number) => {
     let canopyGridAll: Array<CanopyObject> = []
     let canopySufficient: Array<CanopyObject> = []
     let canopyInsufficientAll: Array<CanopyObject> = []
@@ -153,7 +153,8 @@ export const macroCanopy = async (centerX: number, centerY: number) => {
             
             let newX = centerX + i * gridConstant17x
             let newY = centerY + j * gridConstant17x
-            let url = "https://maps.googleapis.com/maps/api/staticmap?center=" + newX + "," + newY + "&zoom=17&size=640x640&maptype=satellite&key=AIzaSyB5gMGVEdjmsBG9ssXrwHbZsoXWO7mc2A4" + gmap_api
+            let url = "https://maps.googleapis.com/maps/api/staticmap?center=" + newX + "," + newY + "&zoom=17&size=640x640&maptype=satellite&key=" + gmap_api
+            console.log(`Trying URL: ${url}`)
             let { all, limit, insufficient } = await returnLowCanopySmallGridsAsync(newX, newY, url);
             
             ijSum++
@@ -164,7 +165,8 @@ export const macroCanopy = async (centerX: number, centerY: number) => {
                 canopySufficient.push(limit)
             }
             canopyInsufficientAll = [...canopyInsufficientAll, ...insufficient]
-            if (ijSum == (bigGridDimension * 2 + 1) ** 2) {
+            if (canopyInsufficientAll.length > limitCount) {
+                return { canopyGridAll, canopySufficient, canopyInsufficientAll };
                 // console.log("Canopy Grid All")
                 // console.log(canopyGridAll)
                 // console.log("Canopy Sufficient")
@@ -195,6 +197,11 @@ export const macroCanopy = async (centerX: number, centerY: number) => {
             }
         }
     }
-    
+
+    console.log("returning")
+    console.log(canopyGridAll.length)
+    console.log(canopySufficient.length)
+    console.log(canopyInsufficientAll.length)
+
     return { canopyGridAll, canopySufficient, canopyInsufficientAll };
 }

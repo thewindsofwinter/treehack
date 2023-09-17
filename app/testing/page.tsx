@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image'
 
@@ -10,38 +10,69 @@ interface Location {
   street_score: number, 
   tree_score: number,
   dataurl: string,
-  generateddata: string,
+  generateddata: string | null,
 }
 
 const IndexPage = () => {
   const [coordinates, setCoordinates] = useState('');
   const [streetViewImages, setStreetViewImages] = useState<Location[]>([]);
   const [loading, setLoading] = useState(false);
+  const [runAxios, setRunAxios] = useState(false);
+
+  useEffect(() => {
+    if (runAxios && streetViewImages.length > 0) {
+        for (let i = 0; i < streetViewImages.length; i++) {
+            console.log(streetViewImages[i].dataurl);
+            setTimeout(() => { editImage(i, streetViewImages[i].dataurl) }, 200);
+        }
+        setRunAxios(false);
+    }
+  }, [runAxios, streetViewImages])
+
+    async function editImage(i: number, datauri: string) {
+        const url = await axios.post('/api/getImage', {
+            id: i,
+            imageDataURI: datauri
+        }).then((response) => response.data.image_dataurl);
+
+        setStreetViewImages((streetViewImages) => {
+            const newData = [...streetViewImages];
+            console.log(url);
+            
+            newData[i].generateddata = url;
+            return newData;
+        })
+    }
 
   // Function to send a POST request to /api/streetView
   async function sendStreetViewRequest() {
+    setStreetViewImages([]);
     setLoading(true);
 
     try {
       // Parse the input coordinates string into separate latitude and longitude lists
-      const coordinatesArray = coordinates
+      const firstCoord = coordinates
         .trim() // Remove leading/trailing whitespace
         .split('\n') // Split into lines
-        .map((line) => line.trim().split(',').map(Number)); // Split each line into number pairs
+        .map((line) => line.trim().split(',').map(Number))[0]; // Split each line into number pairs
+    
+        const coordinatesArray: CanopyObject[] = await axios.post('/api/getLocations', { latitude: firstCoord[1] , longitude: firstCoord[0] }).then((response) => { return response.data.locations });
 
-      const latitudes = coordinatesArray.map(([latitude, _]) => latitude);
-      const longitudes = coordinatesArray.map(([_, longitude]) => longitude);
-
-      console.log(latitudes);
-      console.log(longitudes);
+      const latitudesAll = coordinatesArray.map((obj) => { return obj.x; });
+      const longitudesAll = coordinatesArray.map((obj) => { return obj.y; });
 
       // Make an Axios POST request to /api/streetView with the latitude and longitude lists
       setStreetViewImages(await axios.post('/api/streetView', {
-        latitudes,
-        longitudes,
-      }).then((response) => { return response.data.locations; }));
+        latitudes: [ latitudesAll[0], latitudesAll[1], latitudesAll[2] ],
+        longitudes: [ longitudesAll[0], longitudesAll[1], longitudesAll[2] ]
+      }).then((response) => { 
+        return response.data.locations; 
+        }));
+    
+        setRunAxios(true);
 
       setLoading(false);
+
     } catch (error) {
       setLoading(false);
       console.error('Error:', error);
@@ -79,7 +110,10 @@ const IndexPage = () => {
               </div>
               <div>
                 <p>Generated Image</p>
-                <Image src={image.generateddata} width={384} height={384} alt="generated visualization of canopy improvement" />
+                
+                { image.generateddata ? 
+                    <Image src={image.generateddata} width={384} height={384} alt="generated visualization of canopy improvement" />
+                : <div className="pulse rounded-lg center w-96 h-96"></div> }
               </div>
             </div>
           </div>
