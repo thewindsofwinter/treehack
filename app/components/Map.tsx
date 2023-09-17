@@ -2,28 +2,10 @@
 // import { MapContainer, TileLayer } from 'react-leaflet'
 // import Label from './../components/Label'
 // import React from 'react'
-import { GoogleMap, LoadScript, OverlayView } from '@react-google-maps/api';
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
 
 // const fetch = require('node-fetch'); // For Node.js environment
 const apiKey = "AIzaSyCwEgxhHsfCIZz9rRDOHvwpHQmTnhv8osk" // move this later
-
-// const Map = () =>{
-//     return (
-
-//       <MapContainer id="Start" center={[34.1083,-117.2898]} zoom={5}>
-//         <TileLayer
-//           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-//           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-//         />
-//         <TileLayer
-//                 url={`https://airquality.googleapis.com/v1/mapTypes/US_AQI/heatmapTiles/{z}/{x}/{y}?key=${apiKey}`}
-//                 opacity = {0.5}
-//         />
-// <Label text={"Hello"} latlng={[34.1083,-117.2898]}/>
-
-//       </MapContainer>
-//     )
-// }
 
 const center = {
   lat: 34.1083,
@@ -31,28 +13,47 @@ const center = {
 };
 
 const Map = () => {
+
+  const handleMapLoad = (map) => {
+    const airQualityOverlay = new window.google.maps.ImageMapType({
+      getTileUrl: function(coord, zoom) {
+        return `https://airquality.googleapis.com/v1/mapTypes/US_AQI/heatmapTiles/${zoom}/${coord.x}/${coord.y}?key=${apiKey}`
+      },
+      tileSize: new window.google.maps.Size(256, 256),
+      name: "Air Quality",
+      maxZoom: 11,
+      minZoom: 5,
+      opacity: 0.5
+    })
+
+    map.overlayMapTypes.push(airQualityOverlay)
+  }
+
   return (
     <LoadScript googleMapsApiKey={apiKey}>
       <GoogleMap
         id="map"
         center={center}
         zoom={5}
+        onLoad={handleMapLoad}
         options={{
-          // mapTypeId: 'hybrid',
+          mapTypeId: 'hybrid',
           streetViewControl: false,
-          // mapTypeControl: false
+          mapTypeControl: false,
+          styles: [
+            {
+              featureType: 'poi',
+              elementType: 'labels',
+              stylers: [{ visibility: 'off' }]
+            },
+            {
+              featureType: 'landscape.man_made',
+              elementType: 'labels',
+              stylers: [{ visibility: 'off' }]
+            }
+          ]
         }}
       >
-      {/* <OverlayView
-          position={center}
-          mapPaneName={OverlayView.OVERLAY_LAYER}
-      >
-          <img 
-            src={`https://airquality.googleapis.com/v1/mapTypes/US_AQI/heatmapTiles/5/5/5?key=${apiKey}`} 
-            alt="Air Quality" 
-            style={{ opacity: 0.5 }} 
-          />
-        </OverlayView> */}
       </GoogleMap>
     </LoadScript>
   );
