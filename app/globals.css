@@ -5,6 +5,8 @@
 
 :root {
   --border-radius: 20px;
+  --panel-width: 25vw;
+  --panel-height: 80vh;
 }
 
 html{
@@ -134,8 +136,31 @@ video {
 }
 
 /** **/
-.panel{
-  width: 30%;
-  height: 100%;
+#panel{
+  width: 20vw;
+  height: 80vh;
   background-color: white;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: none;
+  padding-top: 5px;
+}
+
+.POI{
+  font-weight: bold;
+  text-align: left;
+  font-size: large;
+}
+
+.location{
+  width: 95%;
+  height: 15vh;
+  margin: 0px 2.5%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 5px;
+  padding: 10px;
+}
+#analyze-button{
+  
 }

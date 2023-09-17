@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, useMapEvents, LayersControl} from 'react-leafl
 import Label from './../components/Label'
 import Streetview from './Streetview'
 import Control from 'react-leaflet-custom-control'
+import { useState } from 'react'
 
 
 const Map = () =>{
@@ -12,6 +13,8 @@ const Map = () =>{
   
   const { BaseLayer, Overlay } = LayersControl;
 
+  const [toggled, setToggled] = useState(false)
+
   const MapEvents = () => {
     useMapEvents({
       click(e) {
@@ -19,6 +22,10 @@ const Map = () =>{
         // coords exist in "e.latlng.lat" and "e.latlng.lng"
         console.log(e.latlng.lat);
         console.log(e.latlng.lng);
+        const panel = document.getElementById("panel")
+        if(panel && toggled) panel.style.display = "none";
+        else if(panel && !toggled) panel.style.display = "block";
+        setToggled(false)
       }, popupopen(e) {
         const lng = e.popup._latlng.lng;
         const lat = e.popup._latlng.lat;
@@ -28,6 +35,7 @@ const Map = () =>{
     return false;
   }
 
+  const locations = [{"name": "San Bernardino"}]
   
 
     return (
@@ -77,9 +85,16 @@ const Map = () =>{
           </LayersControl>
 
           <Control prepend position='topright'>
-            <div className="panel">
-              <h1>This is a div</h1>
-              <button>
+            <div id="panel">
+              {/* {locations.map((location, index)=>(
+                <p key={index}>{location}</p>
+              ))} */}
+              <div className="location">
+                <h1 className='POI'>San Bernardino</h1>
+                <p>Latitude: 12.231 °W</p>
+                <p>Longitude: 12.231 °N</p>
+              </div>
+              <button id="analyze-button">
                 Analyze
               </button>
             </div>
