@@ -1,8 +1,10 @@
 "use client"
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
+// const fetch = require('node-fetch'); // For Node.js environment
+const apiKey = "AIzaSyCwEgxhHsfCIZz9rRDOHvwpHQmTnhv8osk" // move this later
 
-// https://airquality.googleapis.com/v1/mapTypes/TYPE/heatmapTiles/Z/X/Y?key=YOUR_API_KEY
+const endpoint = `https://airquality.googleapis.com/v1/mapTypes/TYPE/heatmapTiles/2/0/1?key=${apiKey}`
 
 const Map = () =>{
     return (
