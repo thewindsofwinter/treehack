@@ -1,5 +1,5 @@
 "use client"
-import { MapContainer, TileLayer, useMapEvents, LayersControl} from 'react-leaflet'
+import { MapContainer, TileLayer, useMapEvents, LayersControl, Marker, Popup} from 'react-leaflet'
 import Label from './../components/Label'
 import Streetview from './Streetview'
 import Control from 'react-leaflet-custom-control'
@@ -98,12 +98,11 @@ const Map = () =>{
                 url="http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png"
                 // attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
               />
-
-              {/* Popup */}
-              <Label text={""} latlng={[Number(selected[0]),Number(selected[1])]}/>
+              {selected ? <Label text={"Hello"} latlng={[Number(selected[1]),Number(selected[0])]}/> : <></>}
               {/* Enables Map Events on the Container */}
               <MapEvents />
             </LayersControl>
+            
 
           <Control prepend position='topright'>
             <div id="panel">

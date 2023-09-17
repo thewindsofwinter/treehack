@@ -175,7 +175,7 @@ video {
 .POI{
   font-weight: bold;
   /* text-align: left; */
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .location{
@@ -193,7 +193,7 @@ video {
 }
 
 .location > p {
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .location span{
