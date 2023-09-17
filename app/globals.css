@@ -128,7 +128,6 @@ video {
 .map-shell{
   position: relative;
   height: 80vh;
-<<<<<<< HEAD
   border-radius: var(--border-radius);
 }
 
@@ -267,7 +266,6 @@ video {
   font-weight: 500;
   text-align: justify;
   padding: 20px 50px 40px 50px;
-=======
   background-color: aqua;
 }
 
@@ -286,5 +284,4 @@ video {
   to {
     background-position-x: 0%;
   }
->>>>>>> andy
 }
