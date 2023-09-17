@@ -11,10 +11,11 @@ interface Location {
     generateddata?: string,
 }
 
-export async function POST(req: Request) {
+export async function POST(req: Request) {   
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY
   const { latitude, longitude } = await req.json();
 
-    const location = await fetch(`https://maps.googleapis.com/maps/api/streetview/metadata?location=${latitude},${longitude}&radius=500&key=AIzaSyB5gMGVEdjmsBG9ssXrwHbZsoXWO7mc2A4`)
+    const location = await fetch(`https://maps.googleapis.com/maps/api/streetview/metadata?location=${latitude},${longitude}&radius=500&key=${apiKey}`)
         .then((response) => response.json())
         .then((json) => {
             // console.log(json);

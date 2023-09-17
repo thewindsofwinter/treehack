@@ -1,5 +1,5 @@
 "use client"
-import { MapContainer, TileLayer, useMapEvents, LayersControl} from 'react-leaflet'
+import { MapContainer, TileLayer, useMapEvents, LayersControl, Marker, Popup} from 'react-leaflet'
 import Label from './../components/Label'
 import Streetview from './Streetview'
 import Control from 'react-leaflet-custom-control'
@@ -18,8 +18,9 @@ interface Location {
 }
 
 const Map = () =>{
-  const apiKey = "AIzaSyCwEgxhHsfCIZz9rRDOHvwpHQmTnhv8osk" // move this later
-  const tempAPI = "be72f76237db";
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY
+  console.log(apiKey)
+  const tempAPI = "be72f76237db"
   // const tempAPI = "dXNiQDIFhT8b2Wfr"
   
   const { BaseLayer, Overlay } = LayersControl;
@@ -155,12 +156,11 @@ const Map = () =>{
                 url="http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png"
                 // attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
               />
-
-              {/* Popup */}
-              <Label text={""} latlng={[selected[1],selected[0]]}/>
+              {selected ? <Label text={"Hello"} latlng={[Number(selected[1]),Number(selected[0])]}/> : <></>}
               {/* Enables Map Events on the Container */}
               <MapEvents />
             </LayersControl>
+            
 
           <Control prepend position='topright'>
             <div id="panel" className="overflow-scroll">

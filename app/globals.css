@@ -96,12 +96,16 @@ video {
 
 #to-start {
   font-weight: 700;
-  background: #E5E392;
+  background: linear-gradient(99deg, #AF64B6 15.86%, #9D0FA9 101.55%);
+  box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.50);
+  color: white;
 }
 
 #to-about {
   font-weight: 500;
-  background: #BBB5B5;
+  color: #494848;
+  background: #DFDFDF;
+  box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.50);
 }
 
 @keyframes fadein {
@@ -175,7 +179,7 @@ video {
 .POI{
   font-weight: bold;
   /* text-align: left; */
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .location{
@@ -193,7 +197,7 @@ video {
 }
 
 .location > p {
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .location span{
@@ -241,6 +245,10 @@ video {
   font-size: 32px;
   font-weight: 400;
   padding: 20px 40px;
+}
+
+.green {
+  color: #51DF9B;
 }
 
 /* ABOUT */
@@ -293,7 +301,6 @@ video {
   font-weight: 500;
   text-align: justify;
   padding: 20px 50px 40px 50px;
-  background-color: aqua;
 }
 
 .pulse {
