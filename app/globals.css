@@ -128,6 +128,7 @@ video {
 .map-shell{
   position: relative;
   height: 80vh;
+<<<<<<< HEAD
   border-radius: var(--border-radius);
 }
 
@@ -266,4 +267,24 @@ video {
   font-weight: 500;
   text-align: justify;
   padding: 20px 50px 40px 50px;
+=======
+  background-color: aqua;
+}
+
+.pulse {
+  background: linear-gradient(90deg, #0E0E10, #333949 33%, #0E0E10 66%, #333949);
+  background-size: 300% 100%;
+  background-position: 0%;
+  animation: pulsing 3s linear infinite;
+}
+
+@keyframes pulsing {
+  from {
+    background-position-x: 100%;
+  }
+
+  to {
+    background-position-x: 0%;
+  }
+>>>>>>> andy
 }

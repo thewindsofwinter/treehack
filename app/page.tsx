@@ -1,3 +1,5 @@
+"use client"
+import Image from 'next/image'
 import Splash from './components/Splash'
 import About from './components/About'
 import Streetview from './components/Streetview'
