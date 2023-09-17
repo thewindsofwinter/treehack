@@ -5,10 +5,9 @@ import Streetview from './Streetview'
 import Control from 'react-leaflet-custom-control'
 import { useState } from 'react'
 
-
 const Map = () =>{
-  const apiKey = "AIzaSyCwEgxhHsfCIZz9rRDOHvwpHQmTnhv8osk" // move this later
-  const tempAPI = "be72f76237db";
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY
+  const tempAPI = "be72f76237db"
   // const tempAPI = "dXNiQDIFhT8b2Wfr"
   
   const { BaseLayer, Overlay } = LayersControl;
