@@ -1,6 +1,9 @@
 import Splash from './components/Splash'
 import About from './components/About'
+import Streetview from './components/Streetview';
 import dynamic from 'next/dynamic'
+
+
 
 export default function Home() {
 
@@ -11,6 +14,7 @@ export default function Home() {
       <Splash />
       <Map />
       <About />
+      {/* <Streetview /> */}
     </>
   )
 }
