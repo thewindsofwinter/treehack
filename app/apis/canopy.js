@@ -1,4 +1,9 @@
+// default export macroCanopy
+// takes long, lat (note x is long, y is lat), and a handler that takes in arrays of allGrid, sufficientGrid, insufficientGrid
+
+
 var Jimp = require("jimp");
+const gmap_api = "AIzaSyB5gMGVEdjmsBG9ssXrwHbZsoXWO7mc2A4" // process.env['GOOGLE_MAP_API'];
 
 
 const gridConstant = 0.00084 // change in long/lat that'll move a x20 grid one block
@@ -127,7 +132,7 @@ let macroCanopy = (centerX, centerY, handler) => {
             
             let newX = centerX + i * gridConstant17x
             let newY = centerY + j * gridConstant17x
-            let url = "https://maps.googleapis.com/maps/api/staticmap?center=" + newX + "," + newY + "&zoom=17&size=640x640&maptype=satellite&key=AIzaSyB5gMGVEdjmsBG9ssXrwHbZsoXWO7mc2A4"
+            let url = "https://maps.googleapis.com/maps/api/staticmap?center=" + newX + "," + newY + "&zoom=17&size=640x640&maptype=satellite&key=AIzaSyB5gMGVEdjmsBG9ssXrwHbZsoXWO7mc2A4" + gmap_api
             returnLowCanopySmallGrids(newX, newY, url, (canopyGrid, canopyMax, canopyInsufficient) => {
                 ijSum++
                 canopyGridAll = [...canopyGridAll, ...canopyGrid]
@@ -171,6 +176,13 @@ let macroCanopy = (centerX, centerY, handler) => {
         }
     }
 }
+
+
+
+module.export = { macroCanopy }
+
+
+
 
 
 
