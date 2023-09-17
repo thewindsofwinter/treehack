@@ -95,11 +95,12 @@ video {
 
 /* MAP */
 
-.map{
+#Start{
   position: relative;
   margin: 10vh;
   left: calc(15% - 10vh);
   width: 70%;
   height: 80vh;
-  background-color: aqua;
+  border-radius: 20px;
+  /* background-color: aqua; */
 }
