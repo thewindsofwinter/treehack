@@ -8,7 +8,7 @@ const Splash = () =>{
             <div className="splash">
                 <div className="text">
                     <div className="title">TREEHACK</div>
-                    <div className="subtitle">blah blah blah</div>
+                    <div className="subtitle">Treeimagine the world</div>
                     <a href='#Start'><button className="hero-button">Begin Your Journey</button></a>
                 </div>
             </div>
