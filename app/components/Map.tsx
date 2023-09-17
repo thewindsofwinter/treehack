@@ -1,5 +1,6 @@
 "use client"
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { MapContainer, TileLayer } from 'react-leaflet'
+import Label from './../components/Label'
 
 const Map = () =>{
     return (
@@ -8,11 +9,7 @@ const Map = () =>{
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        <Marker position={[34.1083,-117.2898]}>
-          <Popup>
-            Bad Canopy C
-          </Popup>
-        </Marker>
+        <Label text={"Hello"} latlng={[34.1083,-117.2898]}/>
     </MapContainer>
     )
 }
