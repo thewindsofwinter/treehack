@@ -247,6 +247,10 @@ video {
   padding: 20px 40px;
 }
 
+.green {
+  color: #51DF9B;
+}
+
 /* ABOUT */
 #About {
   color: #FFF;
