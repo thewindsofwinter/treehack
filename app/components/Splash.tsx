@@ -10,7 +10,7 @@ const Splash = () =>{
                     <div className="title">TREEHACK</div>
                     <div className="subtitle">Fight urban heat islands by visualizing a greener future</div>
                     <div className="btn-container">
-                        <a href='#Start'><button className="hero-button" id="to-start">Get Started</button></a>
+                        <a href='#Map-section'><button className="hero-button" id="to-start">Get Started</button></a>
                         <a href='#About'><button className="hero-button" id="to-about">Learn More</button></a>
                     </div>
                 </div>
