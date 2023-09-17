@@ -1,11 +1,32 @@
 "use client"
-import { MapContainer, TileLayer } from 'react-leaflet'
+import { MapContainer, TileLayer, GeoJSON} from 'react-leaflet'
 import Label from './../components/Label'
+import californiaHeatData from './../data/cali.geojson'
 
 const apiKey = "AIzaSyCwEgxhHsfCIZz9rRDOHvwpHQmTnhv8osk" // move this later
 const tempAPI = "be72f76237db";
 // const tempAPI = "dXNiQDIFhT8b2Wfr"
 const Map = () =>{
+  const style = (feature: any) => {
+    const description = feature.properties.description
+    const match = /<td>DegHourDay<\/td>\n\n<td>([\d\.]+)<\/td>/.exec(description)
+    const degHourDay = match ? parseFloat(match[1]) : 0
+
+    // Use degHourDay to determine fillColor
+    let fillColor = '#b9c281'; // default for low values
+    if (degHourDay > 100) fillColor = '#c54a53'
+    else if (degHourDay > 60) fillColor = '#e3754f'
+    else if (degHourDay > 30) fillColor = '#eeb06d'
+    else if (degHourDay > 10) fillColor = '#eed790'
+
+    return {
+        fillColor: fillColor,
+        fillOpacity: 0.6,
+        weight: 0.1,
+        color: 'white'
+    }
+}
+  
     return (
       <MapContainer id="Start" center={[34.1083,-117.2898]} zoom={5}>
         <TileLayer
@@ -38,6 +59,8 @@ const Map = () =>{
         />
         <Label text={"Hello"} latlng={[34.1083,-117.2898]}/>
 
+        <GeoJSON data={californiaHeatData} style={style}/>
+        <Label text={"Hello"} latlng={[34.1083,-117.2898]}/>
       </MapContainer>
     )
 }
