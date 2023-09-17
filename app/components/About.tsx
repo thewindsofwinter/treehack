@@ -35,7 +35,7 @@ const About = () =>{
                     <div className="card-body">
                         <h1 className="card-title">What is the Urban Heat Island Effect?</h1>
                         <p className="card-text"> 
-                        * The urban heat island effect refers to the phenomenon where metropolitan areas exhibit higher temperatures than surrounding rural regions. 
+                        The urban heat island effect refers to the phenomenon where metropolitan areas exhibit higher temperatures than surrounding rural regions. 
                         This phenomenon is due to the absorption and radiation of solar energy by infrastructure, such as buildings, roads, and pavements. 
                         These materials have increased retention of heat by urban materials, particularly during the daytime, resulting in elevated nocturnal temperatures and prolonged heat exposure for residents. 
                         Urban heat islands manifest as distinct microclimates marked by elevated temperatures, altered heat flux patterns, and heightened energy demands, making them a subject of considerable concern in urban planning and climate mitigation strategies.
@@ -59,14 +59,23 @@ const About = () =>{
                 <div className="card">
                     <img src="./sample-map.png" alt="heat map image" className="card-img"/>
                     <div className="card-body">
-                        <h1 className="card-title">What Do the Stats Indicate?</h1>
+                        <h1 className="card-title">How Did We Build This?</h1>
                         <p className="card-text"> 
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                            when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                            It has survived not only five centuries, but also the leap into electronic typesetting, remaining 
-                            essentially unchanged.
-                        </p>  
+                            <b>Part I - Map:</b>
+                            <br />For surface temperature: We used the Mateo Blus surface temperature API to render a heat map onto our base map.
+                            <br />For canopy coverage: there are not any granular urban canopy dataset, so we bootstrapped with the Google Maps Satellite API. 
+                            We scanned a 5-mile radius from a point of interest. To calculate canopy density, we built a lightweight computer vision algorithm from scratch to detect trees in aerial images.
+                            <br />For air pollution: we used the Google Maps Air Quality API.
+                            <br />tldr: Part I isolates specific small regions in a large radius that have potential to be improved via tree planting.
+                            
+                            <br /><br /><b>Part II - Identifying specific streets suitable for planting trees</b>
+                            <br />First, we get a street view via the Google StreetView API. To assess whether a street (1) already has a canopy presence, or (2) if not, does it have space for trees to grow: 
+                            we used the OpenAI CLIP API.
+
+                            <br /><br /><b>Part III: Recommendations/details for planting trees on a street</b>
+                            <br /> We integrated the OpenAI Dall-E API to generate a visualization of what the street could be like if it had canopy
+                            <br /> We also used the GPT-3 API by OpenAI to find suitable trees to be planted in this region (soil, climate, maintenance, and we want to promote native species)
+                            </p>  
                     </div>
                 </div>
         </section>
