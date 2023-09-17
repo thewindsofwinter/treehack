@@ -16,6 +16,8 @@ const Map = () =>{
                 url={`https://airquality.googleapis.com/v1/mapTypes/US_AQI/heatmapTiles/{z}/{x}/{y}?key=${apiKey}`}
                 opacity = {0.5}
         />
+        <Label text={"Hello"} latlng={[34.1083,-117.2898]}/>
+
     </MapContainer>
     )
 }
