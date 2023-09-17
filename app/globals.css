@@ -96,12 +96,16 @@ video {
 
 #to-start {
   font-weight: 700;
-  background: #E5E392;
+  background: linear-gradient(99deg, #AF64B6 15.86%, #9D0FA9 101.55%);
+  box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.50);
+  color: white;
 }
 
 #to-about {
   font-weight: 500;
-  background: #BBB5B5;
+  color: #494848;
+  background: #DFDFDF;
+  box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.50);
 }
 
 @keyframes fadein {
