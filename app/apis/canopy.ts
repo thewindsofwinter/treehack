@@ -2,7 +2,7 @@
 // takes long, lat (note x is long, y is lat), and a handler that takes in arrays of allGrid, sufficientGrid, insufficientGrid
 import Jimp from 'jimp'
 
-const gmap_api = "AIzaSyB5gMGVEdjmsBG9ssXrwHbZsoXWO7mc2A4" // process.env['GOOGLE_MAP_API'];
+const gmap_api = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 
 const gridConstant = 0.00084 // change in long/lat that'll move a x20 grid one block
 const gridConstant17x = 0.0033685 // change in long (ik, x is confusing notation here) that'll move a x17 grid one block
@@ -198,10 +198,10 @@ export const macroCanopy = async (centerX: number, centerY: number, limitCount: 
         }
     }
 
-    console.log("returning")
-    console.log(canopyGridAll.length)
-    console.log(canopySufficient.length)
-    console.log(canopyInsufficientAll.length)
+    // console.log("returning")
+    // console.log(canopyGridAll.length)
+    // console.log(canopySufficient.length)
+    // console.log(canopyInsufficientAll.length)
 
     return { canopyGridAll, canopySufficient, canopyInsufficientAll };
 }
